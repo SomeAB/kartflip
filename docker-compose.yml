@@ -1,0 +1,97 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: cartflip_postgres
+    environment:
+      POSTGRES_DB: cartflip
+      POSTGRES_USER: cartflip_user
+      POSTGRES_PASSWORD: cartflip_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - cartflip_network
+
+  # Redis for Celery broker
+  tasks_redis:
+    image: redis:7-alpine
+    container_name: cartflip_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    networks:
+      - cartflip_network
+
+  # Daphne ASGI server (for Django Channels)
+  daphne:
+    build: .
+    container_name: cartflip_daphne
+    command: daphne -b 0.0.0.0 -p 8000 cartflip.asgi:application
+    volumes:
+      - .:/app
+      - static_volume:/app/static
+      - media_volume:/app/media
+    ports:
+      - "8000:8000"
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgres:5432/cartflip
+      - REDIS_URL=redis://tasks_redis:6379/0
+    depends_on:
+      - postgres
+      - tasks_redis
+    restart: unless-stopped
+    networks:
+      - cartflip_network
+
+  # Celery worker for background tasks
+  tasks_celery:
+    build: .
+    container_name: cartflip_celery
+    command: celery -A cartflip worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DEBUG=1
+      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgres:5432/cartflip
+      - REDIS_URL=redis://tasks_redis:6379/0
+    depends_on:
+      - postgres
+      - tasks_redis
+    restart: unless-stopped
+    networks:
+      - cartflip_network
+
+  # Apache web server (reverse proxy)
+  apache:
+    image: httpd:2.4-alpine
+    container_name: cartflip_apache
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./apache/ssl:/usr/local/apache2/conf/ssl
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
+    depends_on:
+      - daphne
+    restart: unless-stopped
+    networks:
+      - cartflip_network
+
+volumes:
+  postgres_data:
+  redis_data:
+  static_volume:
+  media_volume:
+
+networks:
+  cartflip_network:
+    driver: bridge

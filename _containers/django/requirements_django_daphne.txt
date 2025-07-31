@@ -1,0 +1,11 @@
+# Core Functionality
+Django==5.2.4 # High-level Python web framework
+daphne==4.2.0 # ASGI server for Django Channels
+psycopg==3.2.9 # PostgreSQL database adapter for Python
+psycopg-binary==3.2.9 # Binary distribution of psycopg (often used for easier installation)
+django-allauth==65.9.0 # Integrated set of Django applications for authentication, registration, etc.
+
+# Note: Though the Celery package itself is not installed, but packages for results/beat are installed
+# Core Functionality - Tasks
+django-celery-results==2.6.0 # For storing task results in Django DB
+django-celery-beat==2.8.1 # For storing and managing periodic tasks in Django DB

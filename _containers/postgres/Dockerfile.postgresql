@@ -1,0 +1,2 @@
+# Minimal Dockerfile for PostgreSQL
+FROM postgres:17

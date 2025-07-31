@@ -1,0 +1,6 @@
+# Multi-stage build for Celery Worker container
+# Stage 1: Build stage
+FROM python:3.13-slim-bookworm AS builder
+
+# Change directory to '/app'. Also creates the directory if it doesn't exist
+WORKDIR /app
