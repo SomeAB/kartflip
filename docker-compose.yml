@@ -26,20 +26,14 @@ services:
     build:
       context: ./_containers/django
       dockerfile: Dockerfile.django_daphne
-    command: daphne -b 0.0.0.0 -p 8000 cartflip.asgi:application
     depends_on:
       - postgresql
-      - redis_tasks
     volumes:
-      - .:/app
+      - ./app:/app
       - static_volume:/app/static
       - media_volume:/app/media
-    ports:
-      - "8000:8000"
-    environment:
-      - DEBUG=1
-      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgresql:5432/cartflip
-      - REDIS_URL=redis://redis_tasks:6379/0
+    env_file:
+      - ./_containers/django/.env_django
     networks:
       - frontend_network
       - backend_network
@@ -53,10 +47,8 @@ services:
       context: ./_containers/postgresql
       dockerfile: Dockerfile.postgresql
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-    ports:
-      - "5432:5432"
+      - KF_postgresql_data:/var/lib/postgresql/data
+      - ./_containers/postgresql/init_scripts:/docker-entrypoint-initdb.d/
     environment:
       POSTGRES_DB: cartflip
       POSTGRES_USER: cartflip_user
@@ -71,17 +63,14 @@ services:
     image: kartflip/celery_tasks
     build:
       context: ./_containers/tasks
-      dockerfile: Dockerfile.tasks
-    command: celery -A cartflip worker --loglevel=info
+      dockerfile: Dockerfile.celery_tasks
     depends_on:
       - postgresql
       - redis_tasks
     volumes:
-      - .:/app
-    environment:
-      - DEBUG=1
-      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgresql:5432/cartflip
-      - REDIS_URL=redis://redis_tasks:6379/0
+      - ./app:/app
+    env_file:
+      - ./_containers/django/.env_django
     networks:
       - backend_network
       - tasks_network
@@ -95,18 +84,16 @@ services:
       context: ./_containers/tasks
       dockerfile: Dockerfile.redis_tasks
     volumes:
-      - redis_data:/data
-    ports:
-      - "6379:6379"
+      - KF_redis_tasks_data:/data
     networks:
       - tasks_network
     restart: on-failure:3
 
 volumes:
-  postgres_data:
-  redis_data:
-  static_volume:
-  media_volume:
+  KF_postgresql_data:
+    external: true
+  KF_redis_tasks_data:
+    external: true
 
 networks:
   frontend_network:
