@@ -6,7 +6,7 @@ FROM python:3.13-slim-bookworm AS builder
 WORKDIR /app
 
 # Copy requirements file and install dependencies
-COPY requirements_django_daphne.txt /app/requirements_django_daphne.txt
+COPY _containers/django/requirements_django_daphne.txt /app/requirements_django_daphne.txt
 
 # Upgrade pip first
 RUN pip install --upgrade pip
@@ -38,7 +38,7 @@ COPY --from=builder /usr/local/bin /usr/local/bin
 RUN adduser --system djangouser
 
 # Copy only the application code to the correct location
-COPY --chown=djangouser ../app /app/
+COPY --chown=djangouser ./app /app/
 
 # Switch to the non-privileged user
 USER djangouser

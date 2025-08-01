@@ -4,8 +4,8 @@ services:
     container_name: kf_nginx
     image: kartflip/nginx
     build:
-      context: ./_containers/nginx
-      dockerfile: Dockerfile.nginx
+      context: .
+      dockerfile: _containers/nginx/Dockerfile.nginx
     depends_on:
     - daphne
     volumes:
@@ -23,8 +23,8 @@ services:
     container_name: kf_daphne
     image: kartflip/daphne
     build:
-      context: ./_containers/django
-      dockerfile: Dockerfile.django_daphne
+      context: .
+      dockerfile: _containers/django/Dockerfile.django_daphne
     depends_on:
       - postgresql
     volumes:
@@ -47,8 +47,8 @@ services:
     container_name: kf_postgresql
     image: kartflip/postgresql
     build:
-      context: ./_containers/postgresql
-      dockerfile: Dockerfile.postgresql
+      context: .
+      dockerfile: _containers/postgresql/Dockerfile.postgresql
     volumes:
       - KF_postgresql_data:/var/lib/postgresql/data
       - ./_containers/postgresql/init_scripts:/docker-entrypoint-initdb.d
@@ -69,8 +69,8 @@ services:
     container_name: kf_celery_tasks
     image: kartflip/celery_tasks
     build:
-      context: ./_containers/tasks
-      dockerfile: Dockerfile.celery_tasks
+      context: .
+      dockerfile: _containers/tasks/Dockerfile.celery_tasks
     depends_on:
       - postgresql
       - redis_tasks
@@ -95,8 +95,8 @@ services:
     container_name: kf_redis_tasks
     image: kartflip/redis_tasks
     build:
-      context: ./_containers/tasks
-      dockerfile: Dockerfile.redis_tasks
+      context: .
+      dockerfile: _containers/tasks/Dockerfile.redis_tasks
     volumes:
       - KF_redis_tasks_data:/data
     networks:

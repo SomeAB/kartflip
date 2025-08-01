@@ -1,3 +1,18 @@
 # Use the official Redis image as a base
 FROM redis:8
 
+# Create a non-privileged user
+RUN adduser --system --no-create-home redistasksuser
+
+# Set ownership for the default /data directory created by the base image
+RUN chown -R redistasksuser:nogroup /data
+
+# Switch to the non-privileged user
+USER redistasksuser
+
+# Expose the default Redis port
+EXPOSE 6379
+
+# Start the Redis server when the container launches and specify the data directory
+# Read the password from the Docker secret file and use it for authentication
+CMD ["sh", "-c", "redis-server --dir /data --requirepass $(cat /run/secrets/redis_tasks_password)"]

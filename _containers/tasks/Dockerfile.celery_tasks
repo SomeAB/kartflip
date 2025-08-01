@@ -6,7 +6,7 @@ FROM python:3.13-slim-bookworm AS builder
 WORKDIR /app
 
 # Copy requirements and install dependencies
-COPY requirements_tasks.txt /app/requirements_tasks.txt
+COPY _containers/tasks/requirements_tasks.txt /app/requirements_tasks.txt
 
 # Upgrade pip first
 RUN pip install --upgrade pip
@@ -39,16 +39,16 @@ RUN adduser --system tasksuser
 
 # Note: We are doing chown twice, so non-privileged user remains the owner
 # Copy the application code first
-COPY --chown=tasksuser ../app /app/
+COPY --chown=tasksuser ./app /app/
 
-# Copy the entrypoint script and make it executable
-COPY --chown=tasksuser entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
+# Copy the entrypoint script to a location that is not overwritten by a volume mount.
+COPY --chown=tasksuser _containers/tasks/entrypoint.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Switch to the non-privileged user
 USER tasksuser
 
 # Note: We are using 'entrypoint' script because two CMD commands are not allowed in Dockerfile
 # Run the entrypoint script
-CMD ["/app/entrypoint.sh"]
+CMD ["/usr/local/bin/entrypoint.sh"]
 
