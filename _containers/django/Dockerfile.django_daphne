@@ -4,3 +4,44 @@ FROM python:3.13-slim-bookworm AS builder
 
 # Change directory to '/app'. Also creates the directory if it doesn't exist
 WORKDIR /app
+
+# Copy requirements file and install dependencies
+COPY requirements_django_daphne.txt /app/requirements_django_daphne.txt
+
+# Upgrade pip first
+RUN pip install --upgrade pip
+
+# Now install the dependencies listed in the requirements file
+# Use --no-cache-dir to avoid caching the packages in the image
+RUN pip install --no-cache-dir -r requirements_django_daphne.txt
+
+# Stage 2: Final stage
+FROM python:3.13-slim-bookworm
+
+# Change directory to '/app'. Also creates the directory if it doesn't exist
+WORKDIR /app
+
+# REMOVE THESE TWO IN PRODUCTION
+# Set environment variables to optimize Python
+# Prevents Python from writing pyc files to disk
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Prevents Python from buffering stdout and stderr
+# This is useful for seeing logs in real-time when running in a container
+ENV PYTHONUNBUFFERED=1
+
+# Copy the installed packages from the builder stage
+COPY --from=builder /usr/local/lib/python3.13/site-packages /usr/local/lib/python3.13/site-packages
+COPY --from=builder /usr/local/bin /usr/local/bin
+
+# Create a non-privileged user
+RUN adduser --system djangouser
+
+# Copy only the application code to the correct location
+COPY --chown=djangouser ../app /app/
+
+# Switch to the non-privileged user
+USER djangouser
+
+# Command to use the correct module path for Daphne
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8001", "kartflip.asgi:application"]
