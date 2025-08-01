@@ -1,2 +1,6 @@
 # Ignore the .github directory
 .github/
+
+# Normally we would ignore the _secrets directory, but for PRESENTATION purposes, we will not
+# IMPORTANT SECURITY NOTICE: Uncomment the line below when in development/production
+# _secrets/

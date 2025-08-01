@@ -1,38 +1,35 @@
 services:
-  # PostgreSQL Database
-  postgres:
-    image: postgres:15-alpine
-    container_name: cartflip_postgres
-    environment:
-      POSTGRES_DB: cartflip
-      POSTGRES_USER: cartflip_user
-      POSTGRES_PASSWORD: cartflip_password
+  # This is the Nginx container that acts as a reverse proxy
+  nginx_rvproxy:
+    container_name: KF_nginx
+    image: kartflip/nginx_rvproxy
+    build:
+      context: ./_containers/nginx
+      dockerfile: Dockerfile.nginx
+    depends_on:
+    - django_daphne
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+      - static_volume:/var/www/static
+      - media_volume:/var/www/media
     ports:
-      - "5432:5432"
-    restart: unless-stopped
+      - "6000:80"
     networks:
-      - cartflip_network
+      - frontend_network
+    restart: on-failure:3
 
-  # Redis for Celery broker
-  tasks_redis:
-    image: redis:7-alpine
-    container_name: cartflip_redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - redis_data:/data
-    restart: unless-stopped
-    networks:
-      - cartflip_network
-
-  # Daphne ASGI server (for Django Channels)
-  daphne:
-    build: .
-    container_name: cartflip_daphne
+  # This is the Daphne server which serves our Django application using ASGI (async & websockets)
+  django_daphne:
+    container_name: KF_daphne
+    image: kartflip/django_daphne
+    build:
+      context: ./_containers/django
+      dockerfile: Dockerfile.django_daphne
     command: daphne -b 0.0.0.0 -p 8000 cartflip.asgi:application
+    depends_on:
+      - postgresql
+      - redis_tasks
     volumes:
       - .:/app
       - static_volume:/app/static
@@ -41,50 +38,69 @@ services:
       - "8000:8000"
     environment:
       - DEBUG=1
-      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgres:5432/cartflip
-      - REDIS_URL=redis://tasks_redis:6379/0
-    depends_on:
-      - postgres
-      - tasks_redis
-    restart: unless-stopped
+      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgresql:5432/cartflip
+      - REDIS_URL=redis://redis_tasks:6379/0
     networks:
-      - cartflip_network
+      - frontend_network
+      - backend_network
+    restart: on-failure:3
 
-  # Celery worker for background tasks
-  tasks_celery:
-    build: .
-    container_name: cartflip_celery
+  # This is our PostgreSQL container that acts as our primary data store aka Database
+  postgresql:
+    container_name: KF_postgresql
+    image: kartflip/postgresql
+    build:
+      context: ./_containers/postgresql
+      dockerfile: Dockerfile.postgresql
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: cartflip
+      POSTGRES_USER: cartflip_user
+      POSTGRES_PASSWORD: cartflip_password
+    networks:
+      - backend_network
+    restart: on-failure:3
+
+  # This is the Celery worker & scheduler container for handling tasks
+  celery_tasks:
+    container_name: KF_celery
+    image: kartflip/celery_tasks
+    build:
+      context: ./_containers/tasks
+      dockerfile: Dockerfile.tasks
     command: celery -A cartflip worker --loglevel=info
+    depends_on:
+      - postgresql
+      - redis_tasks
     volumes:
       - .:/app
     environment:
       - DEBUG=1
-      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgres:5432/cartflip
-      - REDIS_URL=redis://tasks_redis:6379/0
-    depends_on:
-      - postgres
-      - tasks_redis
-    restart: unless-stopped
+      - DATABASE_URL=postgresql://cartflip_user:cartflip_password@postgresql:5432/cartflip
+      - REDIS_URL=redis://redis_tasks:6379/0
     networks:
-      - cartflip_network
+      - backend_network
+      - tasks_network
+    restart: on-failure:3
 
-  # Apache web server (reverse proxy)
-  apache:
-    image: httpd:2.4-alpine
-    container_name: cartflip_apache
-    ports:
-      - "80:80"
-      - "443:443"
+  # This is our Redis container that acts as a message broker for Celery tasks
+  redis_tasks:
+    container_name: KF_redis
+    image: kartflip/redis_tasks
+    build:
+      context: ./_containers/tasks
+      dockerfile: Dockerfile.redis_tasks
     volumes:
-      - ./apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
-      - ./apache/ssl:/usr/local/apache2/conf/ssl
-      - static_volume:/var/www/static
-      - media_volume:/var/www/media
-    depends_on:
-      - daphne
-    restart: unless-stopped
+      - redis_data:/data
+    ports:
+      - "6379:6379"
     networks:
-      - cartflip_network
+      - tasks_network
+    restart: on-failure:3
 
 volumes:
   postgres_data:
@@ -93,5 +109,9 @@ volumes:
   media_volume:
 
 networks:
-  cartflip_network:
+  frontend_network:
+    driver: bridge
+  backend_network:
+    driver: bridge
+  tasks_network:
     driver: bridge
