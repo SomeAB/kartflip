@@ -1,15 +1,15 @@
 services:
   # This is the Nginx container that acts as a reverse proxy
-  nginx_rvproxy:
-    container_name: KF_nginx
-    image: kartflip/nginx_rvproxy
+  nginx:
+    container_name: kf_nginx
+    image: kartflip/nginx
     build:
       context: ./_containers/nginx
       dockerfile: Dockerfile.nginx
     depends_on:
-    - django_daphne
+    - daphne
     volumes:
-      - ./_containers/nginx/confd:/etc/nginx/nginx.conf
+      - ./_containers/nginx/conf.d:/etc/nginx/conf.d
       - ./app/staticfiles:/app/staticfiles
       - ./app/mediafiles:/app/mediafiles
     ports:
@@ -19,9 +19,9 @@ services:
     restart: on-failure:3
 
   # This is the Daphne server which serves our Django application using ASGI (async & websockets)
-  django_daphne:
-    container_name: KF_daphne
-    image: kartflip/django_daphne
+  daphne:
+    container_name: kf_daphne
+    image: kartflip/daphne
     build:
       context: ./_containers/django
       dockerfile: Dockerfile.django_daphne
@@ -29,8 +29,6 @@ services:
       - postgresql
     volumes:
       - ./app:/app
-      - static_volume:/app/static
-      - media_volume:/app/media
     env_file:
       - ./_containers/django/.env_django
     networks:
@@ -42,17 +40,18 @@ services:
       - postgresql_user
       - postgresql_password
       - django_secretkey
+      - redis_tasks_password
 
   # This is our PostgreSQL container that acts as our primary data store aka Database
   postgresql:
-    container_name: KF_postgresql
+    container_name: kf_postgresql
     image: kartflip/postgresql
     build:
       context: ./_containers/postgresql
       dockerfile: Dockerfile.postgresql
     volumes:
       - KF_postgresql_data:/var/lib/postgresql/data
-      - ./_containers/postgresql/init_scripts:/docker-entrypoint-initdb.d/
+      - ./_containers/postgresql/init_scripts:/docker-entrypoint-initdb.d
     environment:
       POSTGRES_DB_FILE: /run/secrets/postgresql_db
       POSTGRES_USER_FILE: /run/secrets/postgresql_user
@@ -67,7 +66,7 @@ services:
 
   # This is the Celery worker & scheduler container for handling tasks
   celery_tasks:
-    container_name: KF_celery
+    container_name: kf_celery_tasks
     image: kartflip/celery_tasks
     build:
       context: ./_containers/tasks
@@ -79,6 +78,7 @@ services:
       - ./app:/app
     env_file:
       - ./_containers/django/.env_django
+      - ./_containers/tasks/.env_redis_tasks
     networks:
       - backend_network
       - tasks_network
@@ -92,7 +92,7 @@ services:
 
   # This is our Redis container that acts as a message broker for Celery tasks
   redis_tasks:
-    container_name: KF_redis
+    container_name: kf_redis_tasks
     image: kartflip/redis_tasks
     build:
       context: ./_containers/tasks
