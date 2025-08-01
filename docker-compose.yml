@@ -9,12 +9,11 @@ services:
     depends_on:
     - django_daphne
     volumes:
-      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
-      - ./nginx/ssl:/etc/nginx/ssl
-      - static_volume:/var/www/static
-      - media_volume:/var/www/media
+      - ./_containers/nginx/confd:/etc/nginx/nginx.conf
+      - ./app/staticfiles:/app/staticfiles
+      - ./app/mediafiles:/app/mediafiles
     ports:
-      - "6000:80"
+      - "9000:80"
     networks:
       - frontend_network
     restart: on-failure:3
@@ -38,6 +37,11 @@ services:
       - frontend_network
       - backend_network
     restart: on-failure:3
+    secrets:
+      - postgresql_db
+      - postgresql_user
+      - postgresql_password
+      - django_secretkey
 
   # This is our PostgreSQL container that acts as our primary data store aka Database
   postgresql:
@@ -50,12 +54,16 @@ services:
       - KF_postgresql_data:/var/lib/postgresql/data
       - ./_containers/postgresql/init_scripts:/docker-entrypoint-initdb.d/
     environment:
-      POSTGRES_DB: cartflip
-      POSTGRES_USER: cartflip_user
-      POSTGRES_PASSWORD: cartflip_password
+      POSTGRES_DB_FILE: /run/secrets/postgresql_db
+      POSTGRES_USER_FILE: /run/secrets/postgresql_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/postgresql_password
     networks:
       - backend_network
     restart: on-failure:3
+    secrets:
+      - postgresql_db
+      - postgresql_user
+      - postgresql_password
 
   # This is the Celery worker & scheduler container for handling tasks
   celery_tasks:
@@ -75,6 +83,12 @@ services:
       - backend_network
       - tasks_network
     restart: on-failure:3
+    secrets:
+      - postgresql_db
+      - postgresql_user
+      - postgresql_password
+      - django_secretkey
+      - redis_tasks_password
 
   # This is our Redis container that acts as a message broker for Celery tasks
   redis_tasks:
@@ -88,6 +102,8 @@ services:
     networks:
       - tasks_network
     restart: on-failure:3
+    secrets:
+      - redis_tasks_password
 
 volumes:
   KF_postgresql_data:
@@ -102,3 +118,17 @@ networks:
     driver: bridge
   tasks_network:
     driver: bridge
+
+secrets:
+  postgresql_db:
+    file: ./_secrets/postgresql_db_v1.txt
+  postgresql_user:
+    file: ./_secrets/postgresql_user_v1.txt
+  postgresql_password:
+    file: ./_secrets/postgresql_password_v1.txt
+  django_secretkey:
+    file: ./_secrets/django_secretkey_v1.txt
+  redis_tasks_password:
+    file: ./_secrets/redis_tasks_password_v1.txt
+
+
