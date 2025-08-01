@@ -92,6 +92,16 @@ TEMPLATES = [
     },
 ]
 
+# Required for Django allauth core functionality
+AUTHENTICATION_BACKENDS = [
+
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend', 
+]
+
 WSGI_APPLICATION = 'kartflip.wsgi.application'
 
 
@@ -138,9 +148,23 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
+# Url for static files
 STATIC_URL = 'static/'
+
+# Location in app directory where static files are collected when the `collectstatic` command is run
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Additional locations of static files (where collectstatic looks)
+STATICFILES_DIRS = [
+    BASE_DIR / 'staticfiles_source',
+]
+
+# Media files (public, user uploaded files like logos, etc)
+# Url for media files
+MEDIA_URL = 'media/'
+
+# Location in app directory where media files are stored
+MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
