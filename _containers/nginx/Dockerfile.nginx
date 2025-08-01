@@ -4,13 +4,15 @@ FROM nginx:1.29-bookworm
 # Echo the contents of the default configuration file
 RUN echo "Default Nginx Configuration:" && cat /etc/nginx/nginx.conf
 
-# Copy custom nginx configuration. This is the only layer needed for your customization.
-COPY _containers/nginx/conf.d/rvproxy.conf /etc/nginx/conf.d/rvproxy.conf
-
 # Create non-root user, change port to 8080, and set permissions in one layer
 RUN adduser --system nginxuser && \
     sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/conf.d/default.conf && \
-    chown -R nginxuser /var/cache/nginx /var/log/nginx
+    mkdir -p /tmp/nginx && \
+    chown -R nginxuser /var/cache/nginx /var/log/nginx /tmp/nginx && \
+    sed -i 's|pid        /run/nginx.pid;|pid /tmp/nginx/nginx.pid;|g' /etc/nginx/nginx.conf
+
+# Copy custom nginx configuration. This is the only layer needed for your customization.
+COPY _containers/nginx/conf.d/rvproxy.conf /etc/nginx/conf.d/rvproxy.conf
 
 # Expose port 8080 for http traffic.
 EXPOSE 8080
