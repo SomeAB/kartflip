@@ -1,2 +1,5 @@
 # Ignore the .github directory
 .github/
+
+# Ignore the python environment
+kf_venv_01/

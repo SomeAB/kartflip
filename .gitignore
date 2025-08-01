@@ -4,3 +4,11 @@
 # Normally we would ignore the _secrets directory, but for PRESENTATION purposes, we will not
 # IMPORTANT SECURITY NOTICE: Uncomment the line below when in development/production
 # _secrets/
+
+# Ignore the npm folder and tailwind configs
+node_modules/
+package-lock.json
+package.json
+
+# Ignore the python environment
+kf_venv_01/
