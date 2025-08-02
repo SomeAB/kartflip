@@ -1,0 +1,49 @@
+{# base/base_01.html #}
+
+{# Load static files #}
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title_top %}Base{% endblock title_top %}</title>
+    <link rel="icon" type="image/svg+xml" href="{% static 'common/img/kf_icon.svg' %}" sizes="any">
+    <link rel="stylesheet" href="{% static 'common/css/main.css' %}" />
+    {% block extra_css_top %}{% endblock extra_css_top %}
+    {% block extra_js_top %}{% endblock extra_js_top %}
+  </head>
+
+  <body class="bg-grey-95 dark:bg-grey-15 flex min-h-screen flex-col">
+
+    {# Notice for users with JavaScript disabled #}
+    <noscript>
+      <div class="container mx-auto px-4 py-3 mt-2 bg-yellow-100 text-yellow-800 border border-yellow-400 rounded">
+        <p class="font-opensans_semibold text-center">
+          Some features of KartFlip require JavaScript to function properly. 
+          Please enable JavaScript in your browser settings for the best experience.
+        </p>
+      </div>
+    </noscript>
+
+    {# Block For Top Navbar #}
+    {% block navbar_top %}{% endblock navbar_top %}
+
+    {# Block For Sidebar #}
+    {% block sidebar %}{% endblock sidebar %}
+
+    {# Block For Main Content #}
+    {% block content_main %}{% endblock content_main %}
+
+    {# Block For Auth Forms #}
+    {% block content_auth %}{% endblock content_auth %}
+
+    {# Block For Bottom Navbar & Footer #}
+    {% block navbar_bottom %}{% endblock navbar_bottom %}
+
+    {# Block For Extra JS at the bottom #}
+    {% block extra_js_bottom %}{% endblock extra_js_bottom %}
+
+  </body>
+</html>

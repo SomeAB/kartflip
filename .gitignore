@@ -12,3 +12,10 @@ package.json
 
 # Ignore the python environment
 kf_venv_01/
+
+# Ignore the python cache files
+__pycache__/
+*.py[cod]
+*.so
+.pyc
+.Python
