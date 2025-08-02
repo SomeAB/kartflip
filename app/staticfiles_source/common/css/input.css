@@ -1,2 +1,10 @@
 /* First import tailwindcss */
 @import "tailwindcss";
+
+
+@theme {
+
+    /* Custom Colors */
+    --color-kartflip-bg: #f1f2f4;
+    --color-kartflip-searchbar: #f0f5ff;
+}

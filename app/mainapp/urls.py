@@ -12,5 +12,5 @@ app_name = "mainapp"
 
 urlpatterns = [
     path('base/', TemplateView.as_view(template_name='base/base_01.html'), name='base'),
-   
+    path('navbar_in/', TemplateView.as_view(template_name='base/navbar_in.html'), name='navbar_in')
 ]
