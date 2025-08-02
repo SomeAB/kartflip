@@ -19,16 +19,20 @@ from .utils_project import get_secret, get_env
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
+# Read SECRET_KEY from the Docker secret file
+SECRET_KEY = get_secret('django_secretkey')
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-u62s_132xr*@dosn(p1$hwf72@!l4kk^fy!rthor8#qjd(7x)o'
+# Read DEBUG from environment variable
+DEBUG = get_env('DEBUG', 'True') == 'True'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Read USE_X_FORWARDED_HOST from environment variable
+USE_X_FORWARDED_HOST = get_env('USE_X_FORWARDED_HOST', 'True') == 'True'
 
-ALLOWED_HOSTS = []
+# Read ALLOWED_HOSTS from environment variable
+ALLOWED_HOSTS = get_env('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',')
+
+# Read CSRF_TRUSTED_ORIGINS from environment variable
+CSRF_TRUSTED_ORIGINS = get_env('CSRF_TRUSTED_ORIGINS', 'http://127.0.0.1:5000,http://localhost:5000').split(',')
 
 
 # Application definition
@@ -111,10 +115,15 @@ WSGI_APPLICATION = 'kartflip.wsgi.application'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
 DATABASES = {
+    # Note: A database entry with the name 'default' is always required by Django, even if its params are empty
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': get_secret('postgresql_db'),
+        'USER': get_secret('postgresql_user'),
+        'PASSWORD': get_secret('postgresql_password'),
+        'HOST': get_env('DB_HOST', 'postgresql'),
+        'PORT': get_env('DB_PORT', '5432'),
+    },
 }
 
 
@@ -172,6 +181,30 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Django allauth core config
+ACCOUNT_LOGIN_METHODS = {'email'}
+ACCOUNT_CHANGE_EMAIL = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # Set to 'none' to disable email verification for testing
+ACCOUNT_SIGNUP_FIELDS = {'username*', 'email*', 'password1*', 'password2*'} # email with asterisk is required
+ACCOUNT_MAX_EMAIL_ADDRESSES = 2
+ACCOUNT_USERNAME_MIN_LENGTH = 6
+ACCOUNT_PRESERVE_USERNAME_CASING = False
+
+# Django allauth usersessions config
+USERSESSIONS_TRACK_ACTIVITY = True
+
+# Celery Broker Settings (Redis)
+REDIS_TASKS_PASSWORD = get_secret('redis_tasks_password')
+TASKS_REDIS_HOST = get_env("TASKS_REDIS_HOST", "redis_tasks")
+TASKS_REDIS_PORT = get_env("TASKS_REDIS_PORT", 6379)
+
+if REDIS_TASKS_PASSWORD:
+    CELERY_BROKER_URL = f"redis://:{REDIS_TASKS_PASSWORD}@{TASKS_REDIS_HOST}:{TASKS_REDIS_PORT}/1"
+else:
+    # This will raise an error to prevent connecting to Redis without a password
+    raise RuntimeError("REDIS_TASKS_PASSWORD is required for Celery broker. Refusing to connect to Redis without a password.")
+
 
 # General Celery settings
 CELERY_ACCEPT_CONTENT = ['application/json']
