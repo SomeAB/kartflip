@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from mainapp.views import home
 
 
 urlpatterns = [
@@ -24,6 +25,10 @@ urlpatterns = [
 
     # Django Allauth
     path('accounts/', include('allauth.urls')),
+
+    # Project-level 'home' URL directly pointing to the home view
+    # This ensures Allauth can find the 'home' URL name for redirects
+    path('', home, name='home'),
 
     # Include all other mainapp URLs with namespace
     path('', include('mainapp.urls')),

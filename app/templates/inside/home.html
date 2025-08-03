@@ -1,0 +1,55 @@
+{# Template Inheritance #}
+{% extends "base/navbar_in.html" %}
+
+{# Load Static Files #}
+{% load static %}
+
+{# Django All Auth #}
+{% load account %}
+
+{# Change the Title #}
+{% block title_top %}Home{% endblock title_top %}
+
+{# Main Content Block #}
+{% block content_main %}
+
+    {# Redirect to frontpage if not logged in #}
+    {% if not user.is_authenticated %}
+        <script>window.location.href = '{% url "mainapp:navbar_in" %}';</script>
+    {% endif %}
+
+    
+    {# Do this, if logged in #}
+    {% if user.is_authenticated %}
+        
+        <!-- Minimal container with a logout button -->
+        <div class="bg-white border-gray-300 border-2 mx-auto my-20 flex xs:max-w-sm w-9/10 flex-col justify-center rounded-lg p-8 shadow-lg shadow-black/5" >
+
+            <!-- Welcome heading for logged in user -->
+            <div class="text-2xl text-neutral-700">Welcome, {{ user.username }}!</div>
+
+            <!-- Arbitary welcome text -->
+            <div class="text-neutral-700 pb-4"> We are thrilled to have you back! Explore the latest updates and enjoy your time here.<br>Remember, your feedback is always valuable to us. Let us know how we can imporve your experience
+            </div>
+
+            <!-- Logout Button -->
+            <form method="post" action="{% url 'account_logout' %}" class="text-center">
+            {% csrf_token %}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+
+            <input type="submit" value="Logout" class="w-48 rounded-lg border-2 border-neutral-400 bg-neutral-200 py-3 text-neutral-700" />
+            
+            </form>
+
+
+        </div>
+    
+
+
+    {% endif %}
+
+
+
+{% endblock content_main %}

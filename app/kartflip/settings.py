@@ -182,10 +182,13 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Email configuration for development
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 # Django allauth core config
 ACCOUNT_LOGIN_METHODS = {'email'}
 ACCOUNT_CHANGE_EMAIL = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory' # Set to 'none' to disable email verification for testing
+ACCOUNT_EMAIL_VERIFICATION = 'none' # Set to 'none' to disable email verification for testing
 ACCOUNT_SIGNUP_FIELDS = {'username*', 'email*', 'password1*', 'password2*'} # email with asterisk is required
 ACCOUNT_MAX_EMAIL_ADDRESSES = 2
 ACCOUNT_USERNAME_MIN_LENGTH = 6
@@ -193,6 +196,10 @@ ACCOUNT_PRESERVE_USERNAME_CASING = False
 
 # Django allauth usersessions config
 USERSESSIONS_TRACK_ACTIVITY = True
+
+# Django inbuilt auth config
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'mainapp:navbar_in' # temporary
 
 # Celery Broker Settings (Redis)
 REDIS_TASKS_PASSWORD = get_secret('redis_tasks_password')
