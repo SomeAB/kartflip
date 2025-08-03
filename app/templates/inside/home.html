@@ -21,9 +21,124 @@
     
     {# Do this, if logged in #}
     {% if user.is_authenticated %}
+
+        <!-- Top Shelf -->
+        <div class="relative flex bg-white h-36 w-19/20 my-20 mx-auto items-center shadow-md shadow-black/5">
+
+            <!-- Go Left Button -->
+            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 left-0 -translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+
+            <!-- Go Right Button -->
+            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 right-0 translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+
+            <!-- Shelf Items -->
+            <div class="flex overflow-x-auto snap-x scroll-px-6 px-4 gap-3 lg:gap-5 text-neutral-700">
+
+                <!-- Item 1 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/01.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Minutes</p>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/02.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Top Offers</p>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/03.png" %}" alt="" class="block size-16">
+                    <p class="block text-sm">Mobiles & Tablets</p>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/04.png" %}" alt="" class="size-16">
+                    <p class="text-sm">TVs & Appliances</p>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/05.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Electronics</p>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/06.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Fashion</p>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/07.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Beauty, Food..</p>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/08.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Home & Kitchen</p>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/09.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Furniture</p>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/10.png" %}" alt="" class="size-16">
+                    <p class="text-sm">Flight Bookings</p>
+                </div>
+
+                <!-- Item 11 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/11.png' %}" alt="" class="size-16">
+                    <p class="text-sm">Grocery</p>
+                </div>
+
+                <!-- Item 12 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/12.png' %}" alt="" class="size-16">
+                    <p class="text-sm">Toys & Baby</p>
+                </div>
+
+                <!-- Item 13 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/13.png' %}" alt="" class="size-16">
+                    <p class="text-sm">Books & More</p>
+                </div>
+
+                <!-- Item 14 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/14.png' %}" alt="" class="size-16">
+                    <p class="text-sm">Automotive</p>
+                </div>
+
+                <!-- Item 15 -->
+                <div class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/15.png' %}" alt="" class="size-16">
+                    <p class="text-sm">Sports & Fitness</p>
+                </div>
+            </div>
+            <!-- End of Shelf Items -->
+
+        </div>
+        <!-- End of Top Shelf -->
         
         <!-- Minimal container with a logout button -->
-        <div class="bg-white border-gray-300 border-2 mx-auto my-20 flex xs:max-w-sm w-9/10 flex-col justify-center rounded-lg p-8 shadow-lg shadow-black/5" >
+        <div class="bg-white border-gray-300 border-2 mx-auto my-8 flex xs:max-w-sm w-9/10 flex-col justify-center rounded-lg p-8 shadow-lg shadow-black/5" >
 
             <!-- Welcome heading for logged in user -->
             <div class="text-2xl text-neutral-700">Welcome, {{ user.username }}!</div>
