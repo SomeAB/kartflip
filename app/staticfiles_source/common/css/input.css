@@ -7,4 +7,155 @@
     /* Custom Colors */
     --color-kartflip-bg: #f1f2f4;
     --color-kartflip-searchbar: #f0f5ff;
+
+    /* Custom Animations */
+    --animate-wiggle: wiggle 1s ease-in-out infinite;
+
+    @keyframes wiggle {
+        0%,
+        100% {
+            transform: rotate(-6deg);
+        }
+        50% {
+            transform: rotate(6deg);
+        }
+    }
+
+      /* Font families */
+  --font-opensans-light: "opensans_light", sans-serif;
+  --font-opensans-light-italic: "opensans_light_italic", sans-serif;
+  --font-opensans-regular: "opensans_regular", sans-serif;
+  --font-opensans-italic: "opensans_italic", sans-serif;
+  --font-opensans-semibold: "opensans_semibold", sans-serif;
+  --font-opensans-semibold-italic: "opensans_semibold_italic", sans-serif;
+  --font-opensans-bold: "opensans_bold", sans-serif;
+  --font-opensans-bold-italic: "opensans_bold_italic", sans-serif;
+  --font-opensans-extrabold: "opensans_extrabold", sans-serif;
+  --font-opensans-extrabold-italic: "opensans_extrabold_italic", sans-serif;
+  --font-roboto-condensed-medium: "roboto_condensed_medium", sans-serif;
+  --font-roboto-condensed-bold: "roboto_condensed_bold", sans-serif;
+  --font-montserrat-bold: "montserrat_bold", sans-serif;
+  --font-inter: "Inter", sans-serif;
+}
+
+/* Font declarations */
+@font-face {
+  font-family: 'montserrat_bold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/static/common/fonts/montserrat/montserrat_bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_regular';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_light';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_semibold';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_semibold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_bold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_extrabold';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_extrabold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_italic';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_light_italic';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_light_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_semibold_italic';
+  font-style: italic;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_semibold_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_bold_italic';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_bold_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'opensans_extrabold_italic';
+  font-style: italic;
+  font-weight: 800;
+  font-display: swap;
+  src: url('/static/common/fonts/opensans/opensans_extrabold_italic.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'roboto_condensed_medium';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/static/common/fonts/roboto_condensed/roboto_condensed_medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'roboto_condensed_bold';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/static/common/fonts/roboto_condensed/roboto_condensed_bold.woff') format('woff');
+}
+
+/* 2 entries for Inter font */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/static/common/fonts/inter/Inter-VariableFont_opsz,wght.ttf') format('truetype-variations');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/static/common/fonts/inter/Inter-Italic-VariableFont_opsz,wght.ttf') format('truetype-variations');
 }
