@@ -1,17 +1,31 @@
-## KartFlip -- A Flipkart Clone Project 
+# KartFlip — A Flipkart Clone Project 
 
 KartFlip is a demo project that is loosely a clone of Flipkart, built for demonstration purposes.
 
-This project showcases a simplified e-commerce platform inspired by Flipkart's core features and design.
+KartFlip showcases a simplified e-commerce platform that replicates Flipkart's core features and design patterns.
 
-## License
+## 📸 Clone vs Original
 
-**Copyright (c) 2025 SomeAB**
+Below is a visual comparison between KartFlip and the original Flipkart homepage:
 
-This project is provided for demonstration purposes only.
+### KartFlip (Clone)
+<img src="_presentation/kf_screenshot_01.png" alt="KartFlip Clone Screenshot">
 
-No permission is granted to copy, modify, distribute, or use this software, code, files, or any part of this project for any purpose.
+### Flipkart (Original)
+<img src="_presentation/kf_screenshot_02.png" alt="Flipkart Original Screenshot">
 
-Commenced: 31st July 2025
+---
 
-All rights reserved. 
+*These screenshots demonstrate how KartFlip replicates the look and feel of Flipkart's homepage. While inspired by the original design, all code and assets are developed from scratch for educational purposes.*
+
+## 📄 License
+
+**Copyright © 2025 SomeAB**
+
+> ⚠️ **For demonstration purposes only**
+
+- No permission is granted to copy, modify, distribute, or use this software
+- All code, files, and assets are protected under copyright
+- **Project commenced:** July 31st, 2025
+
+*All rights reserved.* 

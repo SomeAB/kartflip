@@ -22,119 +22,303 @@
     {% block content_main %}
 
         <!-- Top Shelf -->
-        <div class="relative flex bg-white h-36 w-19/20 my-20 mx-auto items-center shadow-md shadow-black/5">
+        <div class="relative flex bg-white h-36 w-19/20 mt-20 mx-auto items-center shadow-md shadow-black/5">
 
             <!-- Go Left Button -->
-            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 left-0 -translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none">
+            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 left-0 -translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none" id="prev_topshelf">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
                 </svg>
             </button>
 
             <!-- Go Right Button -->
-            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 right-0 translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none">
+            <button class="absolute flex h-12 w-6 bg-white border border-neutral-200 right-0 translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none" id="next_topshelf">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
                     <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
                 </svg>
             </button>
 
             <!-- Shelf Items -->
-            <div class="flex overflow-x-auto snap-x scroll-px-6 px-4 gap-3 lg:gap-5 text-neutral-700 text-center">
+            <div class="flex overflow-x-auto snap-x scroll-px-10 px-10 gap-10 lg:gap-14 text-neutral-700 text-center no-scrollbar" id="carousel_topshelf">
 
                 <!-- Item 1 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/01.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Minutes</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/01.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Minutes</p>
                 </a>
 
                 <!-- Item 2 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/02.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Top Offers</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/02.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Top Offers</p>
                 </a>
 
                 <!-- Item 3 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/03.png" %}" alt="" class="block size-16">
-                    <p class="block text-sm">Mobiles & Tablets</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/03.png" %}" alt="" class="block size-16">
+                    <p class="block text-sm font-semibold">Mobiles & Tablets</p>
                 </a>
 
                 <!-- Item 4 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/04.png" %}" alt="" class="size-16">
-                    <p class="text-sm">TVs & Appliances</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/04.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">TVs & Appliances</p>
                 </a>
 
                 <!-- Item 5 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/05.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Electronics</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/05.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Electronics</p>
                 </a>
 
                 <!-- Item 6 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/06.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Fashion</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/06.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Fashion</p>
                 </a>
 
                 <!-- Item 7 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/07.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Beauty, Food..</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/07.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Beauty, Food..</p>
                 </a>
 
                 <!-- Item 8 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/08.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Home & Kitchen</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/08.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Home & Kitchen</p>
                 </a>
 
                 <!-- Item 9 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/09.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Furniture</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/09.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Furniture</p>
                 </a>
 
                 <!-- Item 10 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static "test/img/10.png" %}" alt="" class="size-16">
-                    <p class="text-sm">Flight Bookings</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static "test/img/top_shelf/10.png" %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Flight Bookings</p>
                 </a>
 
                 <!-- Item 11 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static 'test/img/11.png' %}" alt="" class="size-16">
-                    <p class="text-sm">Grocery</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/top_shelf/11.png' %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Grocery</p>
                 </a>
 
                 <!-- Item 12 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static 'test/img/12.png' %}" alt="" class="size-16">
-                    <p class="text-sm">Toys & Baby</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/top_shelf/12.png' %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Toys & Baby</p>
                 </a>
 
                 <!-- Item 13 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static 'test/img/13.png' %}" alt="" class="size-16">
-                    <p class="text-sm">Books & More</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/top_shelf/13.png' %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Books & More</p>
                 </a>
 
                 <!-- Item 14 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static 'test/img/14.png' %}" alt="" class="size-16">
-                    <p class="text-sm">Automotive</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/top_shelf/14.png' %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Automotive</p>
                 </a>
 
                 <!-- Item 15 -->
-                <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
-                    <img src="{% static 'test/img/15.png' %}" alt="" class="size-16">
-                    <p class="text-sm">Sports & Fitness</p>
+               <a href="#" class="flex flex-col gap-2 py-2 snap-start w-20 items-center shrink-0">
+                    <img src="{% static 'test/img/top_shelf/15.png' %}" alt="" class="size-16">
+                    <p class="text-sm font-semibold">Sports & Fitness</p>
                 </a>
             </div>
             <!-- End of Shelf Items -->
 
         </div>
         <!-- End of Top Shelf -->
+
+        <!-- Top Banner -->
+        <div class="relative flex bg-white h-3/20 w-19/20 mt-4 mx-auto items-center shadow-md shadow-black/5">
+
+            <!-- Go Left Button -->
+            <button class="absolute z-20 flex h-12 lg:h-16 w-6 lg:w-8 bg-white border border-neutral-200 left-0 -translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none" id="prev_banner">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                </svg>
+            </button>
+
+            <!-- Go Right Button -->
+            <button class="absolute z-20 flex h-12 lg:h-16 w-6 lg:w-8 bg-white border border-neutral-200 right-0 translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none" id="next_banner">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                </svg>
+            </button>
+
+            <!-- Banner Items -->
+            <div id="carousel_banner" class="flex overflow-x-auto snap-x text-neutral-700 text-center mb-6 no-scrollbar">
+
+                <!-- Banner Item 1 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b01.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 2 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b02.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 3 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b03.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 4 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b04.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 5 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b05.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 6 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b06.png' %}" alt="" class="object-contain">
+                </a>
+
+
+                <!-- Banner Item 7 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b07.png' %}" alt="" class="object-contain">
+                </a>
+
+                <!-- Banner Item 8 -->
+                <a href="#" class="flex flex-col snap-start items-center shrink-0 w-full h-full">
+                    <img src="{% static 'test/img/mainbanner/b08.png' %}" alt="" class="object-contain">
+                </a>
+
+
+            </div>
+
+            <!-- Banner Trackers -->
+            <div id="tracker_banner" class="flex gap-2 bg-white h-6 w-full absolute bottom-0 items-center justify-center">
+
+                <!-- Item 01 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 02 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 03 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 04 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 05 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 06 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+
+                <!-- Item 07 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+                <!-- Item 08 -->
+                <div class="h-1 w-3 bg-neutral-300 rounded-full"></div>
+
+
+            </div>
+
+
+        </div>
+        <!-- End of Top Banner -->
+
+        <!-- Shelf 01 Container -->
+        <div class="flex w-19/20 mx-auto mt-4 gap-6">
+            
+            <!-- Shelf 01 -->
+            <div class="relative flex bg-white h-auto w-full lg:w-17/20 items-center shadow-md shadow-black/5">
+
+                <!-- Go Left Button -->
+                <button class="absolute z-20 flex h-12 w-6 bg-white border border-neutral-200 left-0 -translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none lg:hidden" id="prev_shelf1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+                    </svg>
+                </button>
+
+                <!-- Go Right Button -->
+                <button class="absolute z-20 flex h-12 w-6 bg-white border border-neutral-200 right-0 translate-x-1/2 items-center justify-center rounded-md shadow-sm hover:shadow-none lg:hidden" id="next_shelf1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 text-neutral-500">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+                    </svg>
+                </button>
+
+                <!-- Shelf Title -->
+                <div class="absolute top-0 left-0 w-full px-10 pt-4 z-10 pointer-events-none">
+                    <span class="text-lg font-bold text-neutral-800">Best Deals on Smartphones</span>
+                </div>
+
+                <!-- Shelf Items -->
+                <div class="flex overflow-x-auto snap-x scroll-px-10 px-10 lg:px-12 gap-12 lg:gap-22 text-neutral-700 text-center no-scrollbar w-full pt-14 pb-4" id="carousel_shelf1">
+
+                    <!-- Item 1 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/01.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">POCO F7 5G</p>
+                        <p class="text-sm font-semibold">from 29999*</p>
+                    </a>
+
+                    <!-- Item 2 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/02.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">Motorola G85 5G</p>
+                        <p class="text-sm font-semibold">from 14999*</p>
+                    </a>
+
+                    <!-- Item 3 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/03.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">Vivo T4 5G</p>
+                        <p class="text-sm font-semibold">from 20499*</p>
+                    </a>
+
+                    <!-- Item 4 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/04.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">Oppo K13 5G</p>
+                        <p class="text-sm font-semibold">from 16499*</p>
+                    </a>
+
+                    <!-- Item 5 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/05.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">Realme P3 5G</p>
+                        <p class="text-sm font-semibold">from 14999*</p>
+                    </a>
+
+                    <!-- Item 6 -->
+                    <a href="#" class="flex flex-col py-2 snap-start w-auto items-center justify-center shrink-0">
+                        <img src="{% static "test/img/shelf_01/06.png" %}" alt="" class="h-24 lg:h-40">
+                        <p class="text-sm pt-2">Motorola G45 5G</p>
+                        <p class="text-sm font-semibold">from 10999*</p>
+                    </a>
+
+                </div>
+
+            </div>
+
+            <!-- Shelf 01 Sideitem (visible only on lg and up) -->
+            <div class="hidden bg-white lg:flex h-40 lg:h-80 w-auto items-center justify-center border border-neutral-300 ml-auto">
+                <a href="#" class="flex h-full items-center">
+                    <img src="{% static 'test/img/shelf_01/s1_sideitem.png' %}" alt="Shelf 01 Side Item" class="h-full max-h-full object-contain">
+                </a>
+            </div>
+
+        </div>
+
+        
 
         
         
@@ -167,8 +351,8 @@
         {# Block For Extra JS at the bottom #}
         {# We are adding minimal js for some functionality #}
         {% block extra_js_bottom %}
-        
-        
+        <script src="{% static 'common/js/manual_shelf.js' %}" defer></script>
+        <script src="{% static 'common/js/auto_slide_banner.js' %}" defer></script>
         {% endblock extra_js_bottom %}
 
 
